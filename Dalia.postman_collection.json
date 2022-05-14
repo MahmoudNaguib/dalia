@@ -1,0 +1,1178 @@
+{
+	"info": {
+		"_postman_id": "513f22db-b566-48a9-8d0a-10109a81f827",
+		"name": "Dalia",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "{{email}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{{$randomFirstName}} {{$randomLastName}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{$randomExampleEmail}}",
+									"description": "Required|Email",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "{{$randomPhoneNumber}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"description": "Required|min:5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logged",
+			"item": [
+				{
+					"name": "Profile",
+					"item": [
+						{
+							"name": "index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/profile",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "user1 updated",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "{{email}}",
+											"type": "text"
+										},
+										{
+											"key": "mobile",
+											"value": "{{$randomPhoneNumber}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{password}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/profile",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Contacts",
+					"item": [
+						{
+							"name": "index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/contacts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "mobile",
+											"value": "{{$randomPhoneNumber}}",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "{{$randomExampleEmail}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/contacts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/contacts\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "mobile",
+											"value": "{{$randomPhoneNumber}}",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "{{$randomExampleEmail}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/contacts/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"contacts",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/contacts\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/contacts/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"contacts",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/contacts\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/contacts/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"contacts",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Certificates",
+					"item": [
+						{
+							"name": "index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/certificates",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"certificates"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "organization_name",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "issue_date",
+											"value": "2022-01-28",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/certificates",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"certificates"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/certificates\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "organization_name",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "issue_date",
+											"value": "2022-01-01",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/certificates/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"certificates",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/certificates\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/certificates/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"certificates",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/certificates\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/certificates/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"certificates",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Experiences",
+					"item": [
+						{
+							"name": "index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/experiences",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"experiences"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "job_title",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "company_name",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "company_website",
+											"value": "https://{{$randomDomainName}}",
+											"type": "text"
+										},
+										{
+											"key": "start_date",
+											"value": "2020-01-01",
+											"type": "text"
+										},
+										{
+											"key": "end_date",
+											"value": "2022-02-01",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/experiences",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"experiences"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/experiences\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "job_title",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "company_name",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "company_website",
+											"value": "https://{{$randomDomainName}}",
+											"type": "text"
+										},
+										{
+											"key": "start_date",
+											"value": "2020-01-01",
+											"type": "text"
+										},
+										{
+											"key": "end_date",
+											"value": "2022-02-01",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/experiences/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"experiences",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/experiences\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/experiences/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"experiences",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/experiences\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/experiences/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"experiences",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Skills",
+					"item": [
+						{
+							"name": "index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/skills",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"skills"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "years_of_experience",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "proficiency",
+											"value": "5",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/skills",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"skills"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/skills\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "job_title",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "company_name",
+											"value": "{{$randomLoremSentence}}",
+											"type": "text"
+										},
+										{
+											"key": "company_website",
+											"value": "https://{{$randomDomainName}}",
+											"type": "text"
+										},
+										{
+											"key": "start_date",
+											"value": "2020-01-01",
+											"type": "text"
+										},
+										{
+											"key": "end_date",
+											"value": "2022-02-01",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/skills/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"skills",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/skills\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/skills/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"skills",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: pm.environment.get(\"url\")+\"/api/skills\",",
+											"    method: 'Get',",
+											"      header: {",
+											"        'Content-Type':'application/json',",
+											"        'Authorization':'Bearer '+pm.environment.get('token')",
+											"    }",
+											"}, function (err, res) {",
+											"    const data=res.json();",
+											"    pm.environment.set(\"id\",data.data[data.data.length-1].id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/skills/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"skills",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: pm.environment.get(\"url\")+\"/api/auth/login\",",
+							"    method: 'POST',",
+							"    header: 'Content-Type:application/json',",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({'email':pm.environment.get(\"email\"), 'password':pm.environment.get(\"password\")})",
+							"    }",
+							"}, function (err, res) {",
+							"    const data=res.json();",
+							"    pm.environment.set(\"token\", data.data.attributes.token);",
+							"    pm.request.headers.add({key: 'Authorization', value:\"Bearer \"+pm.environment.get(\"token\")})",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}

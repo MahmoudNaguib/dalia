@@ -40,6 +40,7 @@ Password: dalia@12345
 ## POSTMAN API
 ```bash
 https://documenter.getpostman.com/view/375068/UyxjF5z8
+or you can use the exported posman file in project root path : Dalia.postman_collection.json
 - create environment with variables
   - url: localhost:8000
   - email:user1@dalia.com
