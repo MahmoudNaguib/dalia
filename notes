@@ -1,0 +1,12 @@
+npm install cors dotenv nodemon express body-parser multer mysql bcrypt knex objection --save
+npm install @faker-js/faker --save-dev
+
+
+knex migrate:make sections --migrations-directory=src/Database/Migrations
+knex seed:make 01_users
+knex migrate:latest
+knex seed:run
+
+Links
+https://www.npmjs.com/package/@faker-js/faker
+http://knexjs.org/
